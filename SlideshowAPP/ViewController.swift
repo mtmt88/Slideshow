@@ -34,15 +34,17 @@ class ViewController: UIViewController {
         // セグエを使用して画面を遷移
         performSegue(withIdentifier: "result", sender: nil)
         
+        //タイマー起動中に画面遷移をした場合
         if self.timer != nil {
-        // タイマーを停止
-        self.timer.invalidate()
-        // nil にして再び再生(nil の時にタイマー生成)
-        self.timer = nil
+          // タイマーを停止
+          self.timer.invalidate()
+          // nil にして再び再生(nil の時にタイマー生成)
+          self.timer = nil
+        
+          // 再生・停止ボタンタップ時に進むボタン・戻るボタンのタップ表示
+          nextButton.isEnabled = true
+          backButton.isEnabled = true
         }
-        // 再生・停止ボタンタップ時に進むボタン・戻るボタンのタップ表示
-        nextButton.isEnabled = true
-        backButton.isEnabled = true
 
         //タイトルを再生に戻す
         startStopButton.setTitle("再生", for: .normal)
