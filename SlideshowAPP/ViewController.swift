@@ -28,17 +28,32 @@ class ViewController: UIViewController {
     //ボタン
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
-
+    @IBOutlet weak var startStopButton: UIButton!
+    
     @IBAction func tapAction(_ sender: Any) {
         // セグエを使用して画面を遷移
         performSegue(withIdentifier: "result", sender: nil)
+        
+        if self.timer != nil {
+        // タイマーを停止
+        self.timer.invalidate()
+        // nil にして再び再生(nil の時にタイマー生成)
+        self.timer = nil
+        }
+        // 再生・停止ボタンタップ時に進むボタン・戻るボタンのタップ表示
+        nextButton.isEnabled = true
+        backButton.isEnabled = true
+
+        //タイトルを再生に戻す
+        startStopButton.setTitle("再生", for: .normal)
+        
     }
     
     @IBAction func unwind(_ segue: UIStoryboardSegue) {
     }
     
     //進むボタン
-    @IBAction func Next(_ sender: Any) {
+    @IBAction func next(_ sender: Any) {
         // 表示している画像の番号を1増やす
         dispImageNo += 1
 
@@ -47,7 +62,7 @@ class ViewController: UIViewController {
     }
     
     //戻るボタン
-    @IBAction func Back(_ sender: Any) {
+    @IBAction func back(_ sender: Any) {
         // 表示している画像の番号を1減らす
         dispImageNo -= 1
         // 表示している画像の番号を元に画像を表示する
@@ -55,7 +70,7 @@ class ViewController: UIViewController {
     }
             
     //再生・停止ボタン
-    @IBAction func StartStop(_ sender: Any) {
+    @IBAction func startStop(_ sender: Any) {
        
         // 動作中のタイマーを1つに保つために、 timer が存在しない場合だけ、タイマーを生成して動作させる
         if self.timer == nil {
@@ -65,6 +80,10 @@ class ViewController: UIViewController {
             // 再生・停止ボタンタップ時に進むボタン・戻るボタンのタップ非表示
             nextButton.isEnabled = false
             backButton.isEnabled = false
+            
+            //タイトルを停止に変更
+            startStopButton.setTitle("停止", for: .normal)
+            
         } else if self.timer != nil {
             // タイマーを停止
             self.timer.invalidate()
@@ -74,6 +93,8 @@ class ViewController: UIViewController {
             nextButton.isEnabled = true
             backButton.isEnabled = true
 
+            //タイトルを再生に戻す
+            startStopButton.setTitle("再生", for: .normal)
         }
     }
 
